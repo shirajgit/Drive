@@ -1,0 +1,38 @@
+ <!doctype html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+    <link href="https://cdn.jsdelivr.net/npm/flowbite@4.0.1/dist/flowbite.min.css" rel="stylesheet" />
+
+  </head>
+  <body class="bg-gray-100 dark:bg-gray-800 h-screen w-screen flex items-center justify-center text-black dark:text-white">
+    
+
+    
+<form class="w-96" action="/user/login" method="post">
+   
+        <div>
+            <label for="username" class="block mb-2.5 text-sm font-medium text-heading">username</label>
+            <input type="text" id="username" class=" bg-gray-900 text-heading text-sm rounded-2xl focus:ring-brand focus:border-brand block w-full px-3 py-2.5 shadow-xs placeholder:text-body" placeholder="John"  required name="username"  />
+        </div>
+
+     
+    <div class="mb-6">
+        <label for="password" class="block mb-2.5 text-sm font-medium text-heading">Password</label>
+        <input type="password" id="password" class="bg-gray-900 border text-heading text-sm rounded-2xl focus:ring-brand focus:border-brand block w-full px-3 py-2.5 shadow-xs placeholder:text-body" placeholder="•••••••••" required name="password"  />
+    </div> 
+    
+    <button type="submit" class="text-white bg-blue-400 box-border border border-transparent rounded-2xl hover:bg-gray-900 focus:ring-4 focus:ring-blue-400 shadow-xs font-medium leading-5 rounded-base text-sm px-4 py-2.5 focus:outline-none">Submit</button>
+</form>
+
+
+
+     
+    <script src="https://cdn.jsdelivr.net/npm/flowbite@4.0.1/dist/flowbite.min.js">
+
+    </script>
+
+  </body>
+</html>
