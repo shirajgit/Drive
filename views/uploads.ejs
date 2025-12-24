@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>Uploaded Files</title>
+  <title>Your Files</title>
   <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
     <link href="https://cdn.jsdelivr.net/npm/flowbite@4.0.1/dist/flowbite.min.css" rel="stylesheet" />
 <link
@@ -10,10 +10,12 @@
     rel="stylesheet"
 />
 </head>
-<body class="bg-gray-100 min-h-screen p-6">
+<body class="bg-blue-200 min-h-screen p-5">
 
-  <h1 class="text-2xl font-bold mb-6">📂 Uploaded Files</h1>
-  <button onclick="showpop()" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
+   
+  <h1 class="text-2xl font-bold mb-6 text-4xl">📂 Your Files</h1>
+  <button onclick="showpop()" 
+  class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-3 px-5 absolute top-4 right-24 text-2xl mb-4 rounded">
       Upload File
      </button>
 
@@ -23,22 +25,23 @@
 
   <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
     <% files.forEach(file => { %>
-      <div class="bg-white p-4 rounded shadow">
+      <div class="bg-gray-400 p-4 rounded border-black shadow-xs ">
 
    <% if (file.fileType && file.fileType.startsWith('image/')) { %>
 
           <img src="<%= file.fileUrl %>" 
-               class="h-40 w-full object-cover rounded mb-2">
+               class="h-70 w-full object-cover rounded mb-2">
+               
         <% } else { %>
-          <div class="h-40 flex items-center justify-center bg-gray-200 rounded mb-2 text-3xl">
-            📄
+          <div class="h-70 flex items-center justify-center bg-gray-200 rounded mb-2 text-4xl">
+            <img src="<%= file.fileUrl %>"  class="h-70 w-full object-cover rounded mb-2">
           </div>
         <% } %>
 
-        <p class="text-sm font-semibold truncate"><%= file.fileName %></p>
+        <p class="text-lg font-semibold truncate"><%= file.fileName %></p>
 
         <a href="<%= file.fileUrl %>" target="_blank"
-           class="text-blue-500 text-sm underline mt-2 inline-block">
+           class="text-blue-900 text-lg underline mt-2 inline-block">
           View / Download
         </a>
 
@@ -47,7 +50,7 @@
   </div>
 
   <% } %>
-  
+
      <div class="pop hidden backdrop-blur fixed top-0 left-0 h-screen w-screen  flex items-center justify-center ">
       
       <form action="/upload-files" method="post" enctype="multipart/form-data"> 

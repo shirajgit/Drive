@@ -20,8 +20,8 @@ router.post('/register' ,
  
          if (!errors.isEmpty()){
             return res.status(400).json({
-                 errors: errors.array(),
-                 message: "Invalid registration data"
+                    errors: errors.array(),
+                 message: "Invalid registration data or thuis user already exists"
                  });
          }
             const { username , email , password } = req.body;  
@@ -34,7 +34,7 @@ router.post('/register' ,
                 password: hashedPassword,
             }); 
 
-            res.redirect('/home');
+            res.redirect('/files');
 })
 
 
