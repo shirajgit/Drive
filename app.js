@@ -1,17 +1,26 @@
 const express = require('express');
 const useRouter = require('./routes/user.routes');
+const indexRouter = require('./routes/index.route');
+const uploadRouter = require('./routes/upload.route');
+
 const app = express();
 const dotenv = require('dotenv');
 dotenv.config();
+const cookieParser = require('cookie-parser');
  const connectToDB = require('./config/db');
+ 
 
  connectToDB()
  
 app.set('view engine', 'ejs');
+app.use(cookieParser());
 app.use(express.json())
 app.use(express.urlencoded({extended:true}))
 
-app.use('/user' , useRouter);
+app.use('/' , useRouter);
+app.use('/' , indexRouter); 
+app.use('/', uploadRouter);
+
 
  
 app.listen(3000, () => {

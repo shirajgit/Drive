@@ -1,7 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const { body , validationResult } = require('express-validator');
-const User = require('../models/user.model');
+const user = require('../models/user.model');
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 
@@ -10,7 +10,7 @@ router.get("/register" , (req,res) => {
     res.render('register'); 
 })
 
-router.post('/register' ,
+router.post('/register' ,   
      body('email').trim().isEmail().isLength({min:10}) ,
      body('password').trim().isLength({min:5}),
      body('username').trim().isLength({min:3}) ,
@@ -28,21 +28,21 @@ router.post('/register' ,
             
             const hashedPassword = await bcrypt.hash(password, 10);
 
-            const newuser = await new User({
+            const newuser = await user.create({
                 username,
                 email,
                 password: hashedPassword,
             }); 
 
-            res.json(newuser)
+            res.redirect('/home');
 })
 
 
-router.get("/login", (req,res) => {
+router.get("/", (req,res) => {
     res.render('login');
 })
 
-router.post('/login' , 
+router.post('/' , 
      body('username').trim().isLength({min:3}) ,
      body('password').trim().isLength({min:5})
      , async ( req,res) => {
@@ -56,13 +56,13 @@ router.post('/login' ,
 } 
    const { username , password } = req.body;
 
-   const user = await User.findOne({
-     username : username});
+   const User = await user.findOne({
+     username : username}); 
 
-     if (!user){
+     if (!User){
         return res.status(400).json({ message: "Invalid username or password" });
      }
-        const isMatch = await bcrypt.compare(password , user.password);
+        const isMatch = await bcrypt.compare(password , User.password);
      
     if (!isMatch){
         return res.status(400).json({ message: "Invalid username or password" });
@@ -78,6 +78,7 @@ router.post('/login' ,
 
     } );
 
-    res.json({ token: token });
-     });
+    res.cookie('token', token );
+    res.redirect('/files'); 
+})
 module.exports = router;
