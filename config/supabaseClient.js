@@ -5,5 +5,5 @@ const supabaseKey = 'sb_secret_1UN3BqUeZk6hNdN4RX8_Qg_BfCrg7Lg' // SERVICE ROLE 
 
 const supabase = createClient(supabaseUrl, supabaseKey)
 
-module.exports = supabase
+module.exports = supabase ;
  

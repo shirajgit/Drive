@@ -1,61 +1,74 @@
-const express = require('express')
-const File = require('../models/file.model')
-const multer = require('multer')
-const supabase = require('../config/supabaseClient')
+
+const express = require("express")
+const multer = require("multer")
+const supabase = require("../config/supabaseClient")
+const User = require("../models/user.model")
+const { auth } = require("../middlewares/auth.middleware")
 
 const router = express.Router()
+const upload = multer({ storage: multer.memoryStorage() })
 
-// ✅ Multer with memory storage
-const upload = multer({
-  storage: multer.memoryStorage(),
-  limits: { fileSize: 5 * 1024 * 1024 } // 5MB
+router.get('/files', auth, async (req, res) => {
+  const user = await User.findById(req.userId).select('urls')
+  res.render('uploads', { files: user.urls })
 })
 
 
-// GET all uploaded files
-router.get('/files', async (req, res) => {
-  try {
-    const files = await File.find().sort({ createdAt: -1 })
-    res.render('uploads', { files })
-  } catch (err) {
-    res.status(500).json({ error: err.message })
-  }
-})
-
-// server.js or routes/upload.js
-router.post('/upload-files', upload.single('file'), async (req, res) => {
+router.post("/files", auth, upload.single("file"), async (req, res) => {
   try {
     const file = req.file
-    if (!file) throw new Error("No file uploaded")
+    if (!file) return res.redirect("/files")
 
-    // Supabase upload
-    const filePath = `uploads/${Date.now()}-${file.originalname}`
-    const { error } = await supabase.storage
-      .from('uploads')
+    // 🔹 Upload to Supabase
+    const filePath = `users/${req.userId}/${Date.now()}-${file.originalname}`
+
+    const { data, error } = await supabase.storage
+      .from("uploads")
       .upload(filePath, file.buffer, {
         contentType: file.mimetype
       })
 
     if (error) throw error
 
-    const { data } = supabase.storage.from('uploads').getPublicUrl(filePath)
+    // 🔹 Get public URL
+    const { data: publicData } = supabase.storage
+      .from("uploads")
+      .getPublicUrl(filePath)
 
-    // Optionally store in Mongo
-    await File.create({
-      fileUrl: data.publicUrl,
-      fileName: file.originalname
+    // 🔹 ✅ ADD HERE (THIS IS YOUR CODE)
+    await User.findByIdAndUpdate(req.userId, {
+      $push: {
+        urls: {
+          fileUrl: publicData.publicUrl,
+          fileName: file.originalname,
+          fileType: file.mimetype,   // 👈 added here
+          uploadedAt: new Date()
+        }
+      }
     })
 
-    res.redirect('/files');
+    res.redirect("/files")
 
   } catch (err) {
-    console.error("Upload error:", err.message)
-    res.status(500).json({ success: false, error: err.message })
+    console.error(err)
+    res.redirect("/files")
   }
 })
 
 
- 
+router.post("/delete-file/:id", auth, async (req, res) => {
+  try {
+    const fileId = req.params.id
+
+    await User.findByIdAndUpdate(req.userId, {
+      $pull: { urls: { _id: fileId } }
+    })
+
+    res.redirect("/files")
+  } catch (err) {
+    res.status(500).send("Delete failed")
+  }
+})
 
 
 module.exports = router

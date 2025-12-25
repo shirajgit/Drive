@@ -2,7 +2,9 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>Your Files</title>
+ 
+  <title>Shiraj`s Drive</title>
+      <link rel="icon"  href="/favicon.ico" /> 
   <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
     <link href="https://cdn.jsdelivr.net/npm/flowbite@4.0.1/dist/flowbite.min.css" rel="stylesheet" />
 <link
@@ -23,18 +25,47 @@
     <p class="text-gray-600">No files uploaded yet.</p>
   <% } else { %>
 
-  <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
+  <div class="grid grid-cols-1 sm:grid-cols-3 md:grid-cols-4 gap-6">
     <% files.forEach(file => { %>
       <div class="bg-gray-400 p-4 rounded border-black shadow-xs ">
 
    <% if (file.fileType && file.fileType.startsWith('image/')) { %>
 
           <img src="<%= file.fileUrl %>" 
-               class="h-70 w-full object-cover rounded mb-2">
+               class="h-40 w-full object-cover rounded mb-2">
+     <% } else if (file.fileType === 'application/pdf') { %>
+
+  <!-- PDF -->
+  <div class="h-40 flex items-center flex-col justify-center bg-red-100 rounded mb-2 text-6xl">
+    <i class="ri-file-text-line"></i> <p class="text-lg">PDF file</p>
+  </div>    
+  
+      <% } else if (file.fileType && file.fileType.includes('video')) { %>
+
+  <!-- VIDEO ICON -->
+  <div class="h-40 flex items-center flex-col justify-center bg-purple-100 rounded mb-2 text-6xl">
+    <i class="ri-folder-video-fill"></i> <p class="text-lg">VIDEO</p>
+  </div>
+     
+           <% } else if (file.fileType && file.fileType.includes('zip')) { %>
+
+  <!-- ZIP ICON -->
+  <div class="h-40 flex items-center justify-center flex-col bg-yellow-100 rounded mb-2 text-6xl">
+    <i class="ri-folder-zip-line"></i> <p class="text-lg">ZIP file</p>
+  </div>
+    
+        <% } else if (file.fileType && file.fileType.includes('mp3')) { %>
+
+  <!-- MP3 ICON -->
+  <div class="h-40 flex items-center justify-center flex-col bg-purple-100 rounded mb-2 text-6xl">
+    <i class="ri-file-music-line"></i> <p>MP3 file</p>
+  </div>
                
         <% } else { %>
-          <div class="h-70 flex items-center justify-center bg-gray-200 rounded mb-2 text-4xl">
-            <img src="<%= file.fileUrl %>"  class="h-70 w-full object-cover rounded mb-2">
+          <div class="h-40 flex items-center justify-center bg-gray-200 rounded mb-2 text-4xl">
+            <img src="<%= file.fileUrl %>"  class="h-40 w-full object-cover rounded mb-2"/>
+              
+  
           </div>
         <% } %>
 
@@ -42,8 +73,19 @@
 
         <a href="<%= file.fileUrl %>" target="_blank"
            class="text-blue-900 text-lg underline mt-2 inline-block">
-          View / Download
+          View File
         </a>
+
+        <form action="/delete-file/<%= file._id %>" method="POST"
+      onsubmit="return confirm('Delete this file?')">
+
+  <button type="submit"
+    class="mt-2 w-full bg-red-500 hover:bg-red-700 text-white font-semibold py-1 rounded">
+    🗑 Delete
+  </button>
+
+</form>
+
 
       </div>
     <% }) %>
@@ -53,7 +95,7 @@
 
      <div class="pop hidden backdrop-blur fixed top-0 left-0 h-screen w-screen  flex items-center justify-center ">
       
-      <form action="/upload-files" method="post" enctype="multipart/form-data"> 
+      <form action="/files" method="post" enctype="multipart/form-data"> 
 <div class="flex items-center text-white bg-gray-700 w-96">
     <label for="dropzone-file" class="flex flex-col items-center justify-center w-full h-64 bg-neutral-secondary-medium border border-dashed border-default-strong rounded-2xl cursor-pointer hover:bg-gray-900 hover:text-black   ">
         <div class="flex flex-col items-center justify-center text-body pt-5 pb-6">

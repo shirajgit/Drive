@@ -42,43 +42,55 @@ router.get("/", (req,res) => {
     res.render('login');
 })
 
-router.post('/' , 
-     body('username').trim().isLength({min:3}) ,
-     body('password').trim().isLength({min:5})
-     , async ( req,res) => {
-  
-    const errors = validationResult(req);
-        if (!errors.isEmpty()){ 
-              return res.status(400).json({
-                     errors: errors.array(),    
-                     message: "Invalid login data"
-});
-} 
-   const { username , password } = req.body;
+router.post(
+  '/',
+  body('username').trim().isLength({ min: 3 }),
+  body('password').trim().isLength({ min: 5 }),
+  async (req, res) => {
 
-   const User = await user.findOne({
-     username : username}); 
+    const errors = validationResult(req)
+    if (!errors.isEmpty()) {
+      return res.status(400).json({
+        errors: errors.array(),
+        message: "Invalid login data"
+      })
+    }
 
-     if (!User){
-        return res.status(400).json({ message: "Invalid username or password" });
-     }
-        const isMatch = await bcrypt.compare(password , User.password);
-     
-    if (!isMatch){
-        return res.status(400).json({ message: "Invalid username or password" });
-    }   
-        
+    const { username, password } = req.body
+
+    // ✅ find user
+    const userDoc = await user.findOne({ username })
+    if (!userDoc) {
+      return res.status(400).json({ message: "Invalid username or password" })
+    }
+
+    // ✅ compare password
+    const isMatch = await bcrypt.compare(password, userDoc.password)
+    if (!isMatch) {
+      return res.status(400).json({ message: "Invalid username or password" })
+    }
+
+    // ✅ CREATE JWT (IMPORTANT FIX)
     const token = jwt.sign(
-        {   userId: user._id , 
-            email: user.email ,
-            username: user.username
-         }, 
-        process.env.JWT_SECRET,
-        { expiresIn: '1h'
+      {
+        id: userDoc._id,           // 👈 MUST be `id`
+        email: userDoc.email,
+        username: userDoc.username
+      },
+      process.env.JWT_SECRET,
+      { expiresIn: '1h' }
+    )
 
-    } );
+    // ✅ SECURE COOKIE
+    res.cookie('token', token, {
+      httpOnly: true,
+      sameSite: 'strict',
+      maxAge: 60 * 60 * 1000 // 1 hour
+    })
 
-    res.cookie('token', token );
-    res.redirect('/files'); 
-})
+    res.redirect('/files')
+  }
+)
+
+
 module.exports = router;
