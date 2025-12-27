@@ -87,7 +87,7 @@ router.post(
       maxAge: 60 * 60 * 1000 // 1 hour
     })
 
-    res.redirect('/files')
+    res.redirect('/home')
   }
 )
 
@@ -99,7 +99,7 @@ router.get('/profile', async (req, res) => {
     }   
     const decoded = jwt.verify(token, process.env.JWT_SECRET);
     const userDoc = await user.findById(decoded.id).select('username email createdAt'); 
-    const userData = await user.findById(decoded.id);
+    const userData = await user.findById(decoded.id).populate('urls');
     const files = userData.urls || [];
     res.render('profile', { user: userDoc, files });
   } catch (err) {
