@@ -7,7 +7,7 @@ const jwt = require('jsonwebtoken');
 const File = require( '../models/file.model'); // ✅ REQUIRED
 
 
-// "/user/register" 
+// "/register" 
 router.get("/register" , (req,res) => {
     res.render('register'); 
 })
@@ -36,7 +36,7 @@ router.post('/register' ,
                 password: hashedPassword,
             }); 
 
-            res.redirect('/files');
+            res.redirect('/home');
 })
 
 

@@ -8,7 +8,7 @@
     margin: 0;
     font-family: sans-serif;
    background:
-    radial-gradient(circle at 55% 1%, rgba(0,255,170,0.20), transparent 45%),
+    radial-gradient(circle at 55% 1%, rgba(0,255,170,0.15), transparent 45%),
     linear-gradient(40deg, #010409 0%, #020617 60%, #000 100%);
   color: #e5e7eb;
 }
