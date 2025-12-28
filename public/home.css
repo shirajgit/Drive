@@ -2,6 +2,7 @@
     * { box-sizing: border-box; }
 
     body {
+       overflow-x: hidden;
       margin: 0;
       padding: 5;
       min-height: 100vh;
@@ -64,7 +65,7 @@
     }
 
     /* Main */
-    main {
+    .card {
       padding-top: 90px;
       max-width: 1100px;
       margin: auto;

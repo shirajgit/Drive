@@ -14,15 +14,17 @@
 
   <link rel="stylesheet" href="/sidebar.css">
 </head>
-<body class="bg-gray-800 overflow-hidden">
+<body class="bg-gray-800  overflow-x-hidden">
 
   
         <div class="fixed top-0 z-50 w-full flex items-center justify-between px-4 p-4
       font-medium text-[1.2rem] text-white  bg-black border-b border-gray-800">
-     <h1 class="text-2xl font-bold  flex gap-3 text-4xl">
-       <img src="/logo.png" class="h-12 w-12 shadow-[0_0_20px_rgba(134,239,172,0.9)]  
+     <h1 class="text-2xl sm:text-sm font-bold  flex gap-3 text-4xl">
+       <img src="/logo.png" class="ml-10 sm:ml-0 h-12 w-12   shadow-[0_0_20px_rgba(134,239,172,0.9)]  
             hover:shadow-[0_0_35px_6px_rgba(134,239,172,0.7)] rounded-full"/>
-       Shiraj`s Drive</h1>
+       <p class="hidden sm:block">Shiraj`s Drive</p> 
+       <p class="block sm:hidden m-2 text-3xl">Shiraj`s Drive</p>
+      </h1>
        <!-- Mobile Menu Button -->
  
 
@@ -36,8 +38,8 @@
     </div>
  
 
-    <body>
-    <div class=" sidebar left-0 top-0 h-screen w-90 bg-black border-r border-gray-700">       
+    <body  >
+    <div class=" hidden sm:block sidebar left-0 top-0 h-screen w-90 bg-black border-r border-gray-700">       
         <div class="sidebar__header">
             <img src="/logo.png" width="44" height="44" viewBox="0 0 34 34">
                  
@@ -55,7 +57,7 @@
         <div class="sidebar__items ">
             <div class="btn-container">
                 <div class="gradient-box">
-                    <a href="/home">
+                    <a href="/files">
                     <button class="btn" id="sidebarButton01">
                         <div class="btn-text">
                             <i class="ri-home-4-line">
@@ -66,7 +68,7 @@
                             </linearGradient>
                             </defs>
                             </i>
-                            Home   
+                            All Files
                         </div>
                     </button>  
                 </div>
@@ -208,10 +210,78 @@
  
 </body>
 
+<body class="bg-black text-white mt-20 relative">
+
+<!-- 🔘 MOBILE MENU BUTTON -->
+<button id="menuBtn"
+  class="md:hidden  left-4 z-50
+         bg-black border border-gray-700
+         p-2 rounded-lg ">
+<i class="ri-sidebar-fold-line text-2xl"></i>
+</button>
+
+<!-- 🌑 OVERLAY -->
+<div id="overlay"
+  class="fixed inset-0 bg-black/60 hidden z-40 md:hidden"></div>
+
+<!-- 📂 SIDEBAR -->
+<div id="sidebar"
+  class="fixed left-0 top-0 h-screen w-72 bg-black border-r border-gray-700
+         transform transition-transform duration-300 ease-in-out
+         -translate-x-full md:translate-x-0
+         z-50">
+
+  <!-- HEADER -->
+  <div class="flex items-center gap-3 px-6 py-4 border-b border-gray-700">
+    <img src="/logo.png" class="w-10 h-10">
+    <h1 class="text-xl font-semibold">Shiraj’s Drive</h1>
+  </div>
+
+  <!-- ITEMS -->
+  <div class="mt-4 space-y-2 px-4 md:block ">
+
+    <a href="/files" class="sidebar-link1">
+      <i class="ri-home-4-line"></i> All Files
+    </a>
+
+    <a href="/images" class="sidebar-link1">
+      <i class="ri-image-line"></i> Images
+    </a>
+
+    <a href="/audio" class="sidebar-link1">
+      <i class="ri-music-line"></i> Music
+    </a>
+
+    <a href="/videos" class="sidebar-link1">
+      <i class="ri-video-line"></i> Videos
+    </a>
+
+    <a href="/pdfs" class="sidebar-link1">
+      <i class="ri-file-pdf-line"></i> PDFs
+    </a>
+
+    <a href="/zip" class="sidebar-link1">
+      <i class="ri-folder-zip-line"></i> ZIPs
+    </a>
+
+    <a href="/apks" class="sidebar-link1">
+      <i class="ri-android-line"></i> APKs
+    </a>
+
+    <a href="/profile" class="sidebar-link1">
+      <i class="ri-account-circle-line"></i> Profile
+    </a>
+
+  </div>
+</div>
+<script src="/sidebar.js"></script>
+</body>
+
+
  
 <main> 
 
-    <div class=" h-screen overflow-y-auto p-6 pt-24">
+    <div class=" h-screen overflow-y-auto p-6 pt-24  sm:mr-0">
    <p class="flex items-center gap-2 text-gray-300 text-2xl mb-2 font-bold font-medium">
   Files
   <span
@@ -226,7 +296,7 @@
 
       <% if (!files || files.length === 0) { %>
 
-<nav class=" p-20 flex items-center justify-center text-white">
+<nav class=" pt-24 flex items-center justify-center text-white">
 
   <!-- Glass Card -->
   <div class="relative max-w-md w-full p-10 rounded-3xl
@@ -289,7 +359,7 @@
 
   <% } else { %>
 
-<div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+<div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 mr-0">
   <% files.forEach(file => { %>
     <div class="relative bg-gray-900 text-white rounded-2xl border border-gray-700 overflow-hidden shadow-[0_0_35px_6px_rgba(134,239,172,0.2)] rounded
                 hover:shadow-[0_10px_30px_rgba(134,239,172,0.7)] hover:scale-105 transition-all duration-300 p-3 flex flex-col">
