@@ -19,12 +19,12 @@
   
         <div class="fixed top-0 z-50 w-full flex items-center justify-between px-4 p-4
       font-medium text-[1.2rem] text-white  bg-black border-b border-gray-800">
-     <h1 class="text-2xl sm:text-sm font-bold  flex gap-3 text-4xl">
+     <h1 class="text-2xl md:text-sm font-bold  flex gap-3 text-4xl">
       <a href="/home">
-       <img src="/logo.png" class="ml-10 sm:ml-0 h-12 w-12   shadow-[0_0_20px_rgba(134,239,172,0.9)]  
+       <img src="/logo.png" class="ml-10 md:ml-0 h-12 w-12   shadow-[0_0_20px_rgba(134,239,172,0.9)]  
             hover:shadow-[0_0_35px_6px_rgba(134,239,172,0.7)] rounded-full"/></a>
-       <p class="hidden sm:block">Shiraj`s Drive</p> 
-       <p class="block sm:hidden m-2 text-3xl">Shiraj`s Drive</p>
+       <p class="hidden md:block">Shiraj`s Drive</p> 
+       <p class="block md:hidden m-2 text-3xl">Shiraj`s Drive</p>
       </h1>
        <!-- Mobile Menu Button -->
  
@@ -32,7 +32,7 @@
   <button onclick="showpop()"
   class="bg-green-500 shadow-[0_0_20px_rgba(134,239,172,0.8)]  
             hover:shadow-[0_0_35px_6px_rgba(134,239,172,0.7)]  text-white font-bold py-3 px-5
-  absolute top-4 right-4 text-xl rounded-xl block sm:block md:inline-block">
+  absolute top-4 right-4 text-xl rounded-xl block md:block md:inline-block">
   Upload File
 </button>
 
@@ -40,7 +40,7 @@
  
 
     <body  >
-    <div class=" hidden sm:block sidebar left-0 top-0 h-screen w-90 bg-black border-r border-gray-700">       
+    <div class=" hidden md:block sidebar left-0 top-0 h-screen w-90 bg-black border-r border-gray-700">       
         <div class="sidebar__header">
             <img src="/logo.png" width="44" height="44" viewBox="0 0 34 34">
                  
@@ -282,7 +282,7 @@
  
 <main> 
 
-    <div class=" h-screen overflow-y-auto p-6 pt-24  sm:mr-0">
+    <div class=" h-screen overflow-y-auto p-6 pt-24  md:mr-0">
    <p class="flex items-center gap-2 text-gray-300 text-2xl mb-2 font-bold font-medium">
   Files
   <span
@@ -360,7 +360,7 @@
 
   <% } else { %>
 
-<div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 mr-0">
+<div class="grid grid-cols-1 md:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 mr-0">
   <% files.forEach(file => { %>
     <div class="relative bg-gray-900 text-white rounded-2xl border border-gray-700 overflow-hidden shadow-[0_0_35px_6px_rgba(134,239,172,0.2)] rounded
                 hover:shadow-[0_10px_30px_rgba(134,239,172,0.7)] hover:scale-105 transition-all duration-300 p-3 flex flex-col">
@@ -429,7 +429,7 @@
 
 
    <div class="pop hidden fixed inset-0 flex items-center justify-center backdrop-blur-sm bg-black/50 z-50">
-  <form action="/files" method="post" enctype="multipart/form-data" class="bg-gray-900 rounded-2xl p-6 w-11/12 sm:w-96 shadow-lg flex flex-col gap-4 relative">
+  <form action="/files" method="post" enctype="multipart/form-data" class="bg-gray-900 rounded-2xl p-6 w-11/12 md:w-96 shadow-lg flex flex-col gap-4 relative">
 
     <!-- Close button -->
     <button type="button" onclick="hidepop()" 
