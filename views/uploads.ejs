@@ -42,7 +42,7 @@
  
 
     <body  >
-    <div class=" hidden md:block sidebar left-0 top-0 h-screen w-90 bg-black border-r border-gray-700">       
+    <div class=" hidden sm:block sidebar left-0 top-0 h-screen w-90 bg-black border-r border-gray-700">       
         <div class="sidebar__header">
             <img src="/logo.png" width="44" height="44" viewBox="0 0 34 34">
                  
@@ -241,7 +241,7 @@
   </div>
 
   <!-- ITEMS -->
-  <div class="mt-4 space-y-2 px-4  md:block ">
+  <div class="mt-4 space-y-2 px-4  md:hidden ">
 
     <a href="/files" class="sidebar-link1">
       <i class="ri-home-4-line"></i> All Files
@@ -362,7 +362,7 @@
 
   <% } else { %>
 
-<div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 mr-0">
+<div class="grid grid-cols-2  lg:grid-cols-4 gap-6 mr-0">
   <% files.forEach(file => { %>
     <div class="relative bg-gray-900 text-white rounded-2xl border border-gray-700 overflow-hidden shadow-[0_0_35px_6px_rgba(134,239,172,0.2)] rounded
                 hover:shadow-[0_10px_30px_rgba(134,239,172,0.7)] hover:scale-105 transition-all duration-300 p-3 flex flex-col">
