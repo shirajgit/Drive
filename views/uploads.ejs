@@ -17,22 +17,24 @@
 <body class="bg-gray-800  overflow-x-hidden">
 
   
-        <div class="fixed top-0 z-50 w-full flex items-center justify-between px-4 p-4
-      font-medium text-[1.2rem] text-white  bg-black border-b border-gray-800">
+        <div class="fixed top-0 z-50 w-full flex items-center justify-between px-1   p-1 lg:p-4 lg:px-4
+      font-medium  text-white  bg-black border-b border-gray-800">
      <h1 class="text-2xl md:text-sm font-bold  flex gap-3 text-4xl">
       <a href="/home">
-       <img src="/logo.png" class="ml-10 md:ml-0 h-12 w-12   shadow-[0_0_20px_rgba(134,239,172,0.9)]  
+       <img src="/logo.png" class="ml-10 h-8 w-5 mt-1 md:ml-0 lg:h-12 w-12   shadow-[0_0_20px_rgba(134,239,172,0.9)]  
             hover:shadow-[0_0_35px_6px_rgba(134,239,172,0.7)] rounded-full"/></a>
-       <p class="hidden md:block">Shiraj`s Drive</p> 
-       <p class="block md:hidden m-2 text-3xl">Shiraj`s Drive</p>
+      <p class="text-xl md:text-4xl font-semibold text-center md:text-left m-2">
+  Shiraj’s Drive
+</p>
+
       </h1>
        <!-- Mobile Menu Button -->
  
 
   <button onclick="showpop()"
   class="bg-green-500 shadow-[0_0_20px_rgba(134,239,172,0.8)]  
-            hover:shadow-[0_0_35px_6px_rgba(134,239,172,0.7)]  text-white font-bold py-3 px-5
-  absolute top-4 right-4 text-xl rounded-xl block md:block md:inline-block">
+            hover:shadow-[0_0_35px_6px_rgba(134,239,172,0.7)] text-white font-bold  py-1 lg:py-1 px-5
+  absolute top-2 lg:top-4 right-4 text-xl rounded-xl   ">
   Upload File
 </button>
 
@@ -239,7 +241,7 @@
   </div>
 
   <!-- ITEMS -->
-  <div class="mt-4 space-y-2 px-4 md:block ">
+  <div class="mt-4 space-y-2 px-4  md:block ">
 
     <a href="/files" class="sidebar-link1">
       <i class="ri-home-4-line"></i> All Files
@@ -282,7 +284,7 @@
  
 <main> 
 
-    <div class=" h-screen overflow-y-auto p-6 pt-24  md:mr-0">
+    <div class=" h-screen overflow-y-auto p-4 pt-0 lg: pt-20 md:mr-0">
    <p class="flex items-center gap-2 text-gray-300 text-2xl mb-2 font-bold font-medium">
   Files
   <span
@@ -360,7 +362,7 @@
 
   <% } else { %>
 
-<div class="grid grid-cols-1 md:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 mr-0">
+<div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 mr-0">
   <% files.forEach(file => { %>
     <div class="relative bg-gray-900 text-white rounded-2xl border border-gray-700 overflow-hidden shadow-[0_0_35px_6px_rgba(134,239,172,0.2)] rounded
                 hover:shadow-[0_10px_30px_rgba(134,239,172,0.7)] hover:scale-105 transition-all duration-300 p-3 flex flex-col">
@@ -369,33 +371,33 @@
       <% if (file.fileType && file.fileType.startsWith('image/')) { %>
         <a href="/file/<%= file._id %>" class="relative group block rounded-xl overflow-hidden">
           <img src="<%= file.fileUrl %>" 
-               class="h-44 w-full object-cover rounded-xl transition-transform duration-300 group-hover:scale-105" />
+               class="h-20 md:h-44 lg:h-44 w-full object-cover rounded-xl transition-transform duration-300 group-hover:scale-105" />
           <!-- Hover overlay -->
           <div class="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 rounded-xl"></div>
         </a>
       <% } else if (file.fileType === 'application/pdf') { %>
-        <div class="h-44 flex items-center justify-center flex-col bg-red-100 text-red-800 rounded-xl text-6xl">
+        <div class="h-20 md:h-44 lg:h-44 flex items-center justify-center flex-col bg-red-100 text-red-800 rounded-xl text-2xl md:text-6xl">
           <i class="ri-file-text-line"></i>
-          <p class="text-lg mt-2 font-medium">PDF</p>
+          <p class=" text-sm md:text-lg mt-2 font-medium">PDF</p>
         </div>
       <% } else if (file.fileType && file.fileType.includes('video')) { %>
-        <div class="h-44 flex items-center justify-center flex-col bg-purple-100 text-purple-800 rounded-xl text-6xl">
+        <div class="h-20 md:h-44 lg:h-44 flex items-center justify-center flex-col bg-purple-100 text-purple-800 rounded-xl text-2xl md:text-6xl">
           <i class="ri-folder-video-fill"></i>
-          <p class="text-lg mt-2 font-medium">Video</p>
+          <p class="text-sm md:text-lg  mt-2 font-medium">Video</p>
         </div>
       <% } else if (file.fileType && file.fileType.includes('zip')) { %>
-        <div class="h-44 flex items-center justify-center flex-col bg-yellow-100 text-yellow-800 rounded-xl text-6xl">
+        <div class="h-20 md:h-44 lg:h-44 lg:h-44 flex items-center justify-center flex-col bg-yellow-100 text-yellow-800 rounded-xl text-2xl md:text-6xl">
           <i class="ri-folder-zip-line"></i>
-          <p class="text-lg mt-2 font-medium">ZIP</p>
+          <p class="text-sm md:text-lg  mt-2 font-medium">ZIP</p>
         </div>
       <% } else if (file.fileType && file.fileType.includes('audio')) { %>
-        <div class="h-44 flex items-center justify-center flex-col bg-indigo-100 text-indigo-800 rounded-xl text-6xl">
+        <div class="h-20 md:h-44 lg:h-44 lg:h-44 flex items-center justify-center flex-col bg-indigo-100 text-indigo-800 rounded-xl text-2xl md:text-6xl">
           <i class="ri-file-music-line"></i>
-          <p class="text-lg mt-2 font-medium">Audio</p>
+          <p class="text-sm md:text-lg  mt-2 font-medium">Audio</p>
         </div>
       <% } else { %>
         <a href="/file/<%= file._id %>" class="block">
-          <div class="h-44 flex items-center justify-center bg-gray-700 rounded-xl text-4xl">
+          <div class="h-20 md:h-44 lg:h-44 flex items-center justify-center bg-gray-700 rounded-xl text-4xl">
             <i class="ri-file-line"></i>
           </div>
         </a>
