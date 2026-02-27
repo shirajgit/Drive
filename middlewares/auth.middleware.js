@@ -12,7 +12,6 @@ export const auth = (req, res, next) => {
   try {
     const decoded = jwt.verify(token, process.env.JWT_SECRET);
 
-    // ✅ FIX IS HERE
     req.userId = decoded.userId;
 
     next(); 

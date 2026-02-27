@@ -20,11 +20,14 @@ router.post(
     body('username').trim().isLength({ min: 3 })
   ],
   async (req, res) => {
+   
+    const message = "User or email Already exist"
+
     try {
       const errors = validationResult(req);
       if (!errors.isEmpty()) {
         // adjust render/json depending on your front-end expectations
-        return res.status(400).render('register', { errors: errors.array(), old: req.body });
+        return res.status(400).render('error', {message});
       }
 
       const { username, email, password } = req.body;
@@ -32,7 +35,7 @@ router.post(
       // check duplicate user
       const existingUser = await user.findOne({ email });
       if (existingUser) {
-        return res.status(400).render('register', { error: 'User already exists', old: req.body });
+        return res.status(400).render('error', {message});
       }
 
       // hash password and create user
@@ -75,9 +78,11 @@ router.post(
   body('password').trim().isLength({ min: 5 }),
   async (req, res) => {
 
+   const message = "Invalid username or password";
+
     const errors = validationResult(req)
     if (!errors.isEmpty()) {
-      return res.render('error', { errors: errors.array() })
+      return res.render('error', { message  })
     }
 
     const { username, password } = req.body

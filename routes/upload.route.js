@@ -6,16 +6,16 @@ const User = require("../models/user.model")
 const { auth } = require("../middlewares/auth.middleware")
 const File = require( '../models/file.model'); // ✅ REQUIRED
 const user = require("../models/user.model")
+const { uploadFile } = require("../services/storage.service")
 
 const router = express.Router()
 const upload = multer({ storage: multer.memoryStorage() })
 
 router.get('/files', auth, async (req, res) => {
   const user = await User.findById(req.userId).select('urls')
-    const files = await File.find();
+  const files = await File.find();
  
   res.render('uploads', { files: user.urls })
- 
 
 })
 
@@ -27,35 +27,41 @@ router.post("/files", auth, upload.single("file"), async (req, res) => {
     if (!req.userId) {
       return res.status(401).json({ message: "Unauthorized" });
     }
+ 
+     const file = req.file ;
+    // const filePath = `users/${req.userId}/${Date.now()}-${req.file.originalname}`;
 
-    const filePath = `users/${req.userId}/${Date.now()}-${req.file.originalname}`;
+    // const { error } = await supabase.storage
+    //   .from("uploads")
+    //   .upload(filePath, req.file.buffer, {
+    //     contentType: req.file.mimetype
+    //   });
 
-    const { error } = await supabase.storage
-      .from("uploads")
-      .upload(filePath, req.file.buffer, {
-        contentType: req.file.mimetype
-      });
+    // if (error) throw error;
 
-    if (error) throw error;
+    // const { data } = supabase.storage
+    //   .from("uploads")
+    //   .getPublicUrl(filePath);
 
-    const { data } = supabase.storage
-      .from("uploads")
-      .getPublicUrl(filePath);
+     const result = await uploadFile(file.buffer.toString('base64'))
+
 
     const updatedUser = await user.findByIdAndUpdate(
       req.userId,
       {
         $push: {
           urls: {
-            fileUrl: data.publicUrl,
+            fileUrl: result.url,
             fileName: req.file.originalname,
             fileType: req.file.mimetype,
             uploadedAt: new Date()
           }
         }
       },
-      { new: true }
+      { new: true } 
     );
+
+    console.log(result) 
 
     if (!updatedUser) {
       return res.status(404).json({ message: "User not found" });
@@ -163,10 +169,6 @@ router.get('/pdfs', auth, async (req, res) => {
 
   res.render('uploads', { files });
 });
-
-
-
-
-
  
+
 module.exports = router

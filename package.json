@@ -11,6 +11,7 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "@imagekit/nodejs": "^7.3.0",
     "@supabase/supabase-js": "^2.89.0",
     "bcrypt": "^6.0.0",
     "cookie-parser": "^1.4.7",
