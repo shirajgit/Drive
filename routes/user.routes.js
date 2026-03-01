@@ -67,7 +67,7 @@ router.post(
 );
 
 
-
+//login route
 router.get("/", (req,res) => {
     res.render('login');
 })
@@ -102,12 +102,12 @@ router.post(
     // ✅ CREATE JWT (IMPORTANT FIX)
     const token = jwt.sign(
       {
-        id: userDoc._id,           // 👈 MUST be `id`
+        userId: userDoc._id,           // 👈 MUST be `id`
         email: userDoc.email,
         username: userDoc.username
       },
       process.env.JWT_SECRET,
-      { expiresIn: '1h' }
+      { expiresIn: '3h' }
     )
 
     // ✅ SECURE COOKIE
@@ -120,6 +120,7 @@ router.post(
     res.redirect('/home')
   }
 )
+
 
 router.get('/profile', async (req, res) => {
   try {
@@ -155,7 +156,5 @@ router.get('/logout', (req, res) => {
 });
 
  
-
-
-
+ 
 module.exports = router;

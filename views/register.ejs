@@ -6,102 +6,256 @@
   <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
   <link href="https://cdn.jsdelivr.net/npm/flowbite@4.0.1/dist/flowbite.min.css" rel="stylesheet" />
   <title>Shiraj's Drive - Sign Up</title>
+
+  <style>
+    /* smooth */
+    html { scroll-behavior: smooth; }
+  </style>
 </head>
 
-<body class="bg-gray-800 dark:bg-gray-900 h-screen w-screen flex items-center justify-center text-white">
+<body class="min-h-screen w-full bg-gray-900 text-white flex items-center justify-center px-4 py-10">
 
-<form id="registerForm"
-  class="w-full max-w-lg bg-gray-900 dark:bg-gray-800 rounded-2xl border border-gray-700 shadow-[0_0_25px_rgba(134,239,172,0.4)] p-10
-         hover:shadow-[0_0_40px_8px_rgba(134,239,172,0.6)] transition-all duration-300 flex flex-col gap-6"
-  action="/register" method="post">
-  
-  <h1 class="text-3xl font-bold mb-6 text-center">Sign Up</h1>
-
-  <!-- Username -->
-  <div>
-    <label class="block mb-2 text-lg font-medium">Username</label>
-    <input type="text" id="username" name="username"
-      class="bg-gray-800 rounded-2xl w-full px-4 py-2.5 outline-none border border-gray-700 focus:border-green-400 focus:ring-2 focus:ring-green-400 placeholder-gray-400 transition-all duration-200"
-      placeholder="Shiraj Mujawar">
-    <p id="usernameError" class="text-red-400 text-sm mt-1 hidden"></p>
+  <!-- Background glow -->
+  <div class="fixed inset-0 -z-10 overflow-hidden">
+    <div class="absolute -top-40 -left-40 h-96 w-96 rounded-full bg-emerald-500/20 blur-3xl"></div>
+    <div class="absolute -bottom-40 -right-40 h-96 w-96 rounded-full bg-emerald-500/10 blur-3xl"></div>
   </div>
 
-  <!-- Email -->
-  <div>
-    <label class="block mb-2 text-lg font-medium">Email address</label>
-    <input type="email" id="email" name="email"
-      class="bg-gray-800 rounded-2xl w-full px-4 py-2.5 outline-none border border-gray-700 focus:border-green-400 focus:ring-2 focus:ring-green-400 placeholder-gray-400 transition-all duration-200"
-      placeholder="shirajmujawar@gmail.com">
-  </div>
+  <main class="w-full max-w-lg">
+    <form id="registerForm"
+      class="w-full bg-gray-950/70 backdrop-blur-xl rounded-3xl border border-gray-800
+             shadow-[0_0_25px_rgba(16,185,129,0.25)]
+             hover:shadow-[0_0_45px_rgba(16,185,129,0.35)]
+             transition-all duration-300 p-6 sm:p-10 flex flex-col gap-5"
+      action="/register" method="post" novalidate>
 
-  <!-- Password -->
-  <div>
-    <label class="block mb-2 text-lg font-medium">Password</label>
-    <input type="password" id="password" name="password"
-      class="bg-gray-800 rounded-2xl w-full px-4 py-2.5 outline-none border border-gray-700 focus:border-green-400 focus:ring-2 focus:ring-green-400 placeholder-gray-400 transition-all duration-200"
-      placeholder="••••••••">
-    <p id="passwordError" class="text-red-400 text-sm mt-1 hidden"></p>
-  </div>
+      <!-- Header -->
+      <div class="text-center mb-1">
+        <h1 class="text-3xl sm:text-4xl font-extrabold tracking-tight">Create account</h1>
+        <p class="text-gray-400 mt-2 text-sm sm:text-base">Keep your files safe in one place.</p>
+      </div>
 
- 
-  <!-- Submit -->
-  <button id="submitBtn" type="submit"
-    class="w-full py-2.5 bg-green-500 hover:bg-green-600 text-black font-bold rounded-2xl shadow-md hover:shadow-lg opacity-50 cursor-not-allowed transition-all duration-300"
-    disabled>
-    Submit
-  </button>
+      <!-- Username -->
+      <div>
+        <label for="username" class="block mb-2 text-sm sm:text-base font-semibold text-gray-200">
+          Username
+        </label>
 
-  <p class="text-center text-sm mt-2">
-    <a href="/" class="text-green-400 hover:text-green-500 underline">Already have an account? Login</a>
-  </p>
+        <div class="relative">
+          <span class="absolute left-4 top-1/2 -translate-y-1/2 text-gray-400">
+            <i class="ri-user-3-line"></i>
+          </span>
 
-</form>
+          <input type="text" id="username" name="username" autocomplete="username" required
+            class="bg-gray-900 rounded-2xl w-full pl-11 pr-4 py-3 outline-none border border-gray-800
+                   focus:border-emerald-400 focus:ring-2 focus:ring-emerald-400/40
+                   placeholder-gray-500 transition"
+            placeholder="Shiraj Mujawar">
 
-<script>
-const username = document.getElementById("username");
-const password = document.getElementById("password");
- 
+          <span id="usernameOk"
+            class="absolute right-4 top-1/2 -translate-y-1/2 text-emerald-400 hidden">
+            <i class="ri-check-line text-xl"></i>
+          </span>
+        </div>
 
-const usernameError = document.getElementById("usernameError");
-const passwordError = document.getElementById("passwordError");
- 
-const submitBtn = document.getElementById("submitBtn");
+        <p id="usernameError" class="text-red-400 text-sm mt-2 hidden"></p>
+      </div>
 
-function validateForm() {
-  let valid = true;
+      <!-- Email -->
+      <div>
+        <label for="email" class="block mb-2 text-sm sm:text-base font-semibold text-gray-200">
+          Email address
+        </label>
 
-  if (username.value.length <= 3) {
-    usernameError.textContent = "Username must be more than 3 characters";
-    usernameError.classList.remove("hidden");
-    username.classList.add("border-red-500");
-    valid = false;
-  } else {
-    usernameError.classList.add("hidden");
-    username.classList.remove("border-red-500");
-  }
+        <div class="relative">
+          <span class="absolute left-4 top-1/2 -translate-y-1/2 text-gray-400">
+            <i class="ri-mail-line"></i>
+          </span>
 
-  if (password.value.length <= 5) {
-    passwordError.textContent = "Password must be more than 5 characters";
-    passwordError.classList.remove("hidden");
-    password.classList.add("border-red-500");
-    valid = false;
-  } else {
-    passwordError.classList.add("hidden");
-    password.classList.remove("border-red-500");
-  }
+          <input type="email" id="email" name="email" autocomplete="email" required
+            class="bg-gray-900 rounded-2xl w-full pl-11 pr-4 py-3 outline-none border border-gray-800
+                   focus:border-emerald-400 focus:ring-2 focus:ring-emerald-400/40
+                   placeholder-gray-500 transition"
+            placeholder="shirajmujawar@gmail.com">
 
- 
+          <span id="emailOk"
+            class="absolute right-4 top-1/2 -translate-y-1/2 text-emerald-400 hidden">
+            <i class="ri-check-line text-xl"></i>
+          </span>
+        </div>
 
-  submitBtn.disabled = !valid;
-  submitBtn.classList.toggle("opacity-50", !valid);
-  submitBtn.classList.toggle("cursor-not-allowed", !valid);
-}
+        <p id="emailError" class="text-red-400 text-sm mt-2 hidden"></p>
+      </div>
 
-username.addEventListener("input", validateForm);
-password.addEventListener("input", validateForm);
- 
-</script>
+      <!-- Password -->
+      <div>
+        <label for="password" class="block mb-2 text-sm sm:text-base font-semibold text-gray-200">
+          Password
+        </label>
 
-<script src="https://cdn.jsdelivr.net/npm/flowbite@4.0.1/dist/flowbite.min.js"></script>
+        <div class="relative">
+          <span class="absolute left-4 top-1/2 -translate-y-1/2 text-gray-400">
+            <i class="ri-lock-2-line"></i>
+          </span>
+
+          <input type="password" id="password" name="password" autocomplete="new-password" required
+            class="bg-gray-900 rounded-2xl w-full pl-11 pr-12 py-3 outline-none border border-gray-800
+                   focus:border-emerald-400 focus:ring-2 focus:ring-emerald-400/40
+                   placeholder-gray-500 transition"
+            placeholder="••••••••">
+
+          <button type="button" id="togglePass"
+            class="absolute right-3 top-1/2 -translate-y-1/2 px-2 py-1 rounded-lg
+                   text-gray-300 hover:text-white hover:bg-white/10 transition"
+            aria-label="Toggle password visibility">
+            <i id="toggleIcon" class="ri-eye-line text-xl"></i>
+          </button>
+        </div>
+
+        <div class="flex items-center justify-between mt-2">
+          <p id="passwordError" class="text-red-400 text-sm hidden"></p>
+          <p id="passwordHint" class="text-gray-500 text-xs sm:text-sm">
+            Min 6 characters
+          </p>
+        </div>
+
+        <!-- Strength bar -->
+        <div class="mt-3 h-2 bg-gray-800 rounded-full overflow-hidden">
+          <div id="strengthBar" class="h-2 w-0 bg-emerald-500 transition-all"></div>
+        </div>
+      </div>
+
+      <!-- Submit -->
+      <button id="submitBtn" type="submit" disabled
+        class="w-full py-3 rounded-2xl font-extrabold text-black
+               bg-emerald-500 hover:bg-emerald-400
+               shadow-[0_0_25px_rgba(16,185,129,0.35)]
+               hover:shadow-[0_0_40px_rgba(16,185,129,0.5)]
+               transition disabled:opacity-50 disabled:cursor-not-allowed">
+        Create Account
+      </button>
+
+      <p class="text-center text-sm text-gray-300 mt-1">
+        Already have an account?
+        <a href="/" class="text-emerald-400 hover:text-emerald-300 underline font-semibold">Login</a>
+      </p>
+    </form>
+  </main>
+
+  <!-- Remix Icons (you used flowbite but not remix icons in this file) -->
+  <link href="https://cdn.jsdelivr.net/npm/remixicon@4.7.0/fonts/remixicon.css" rel="stylesheet"/>
+
+  <script>
+    const username = document.getElementById("username");
+    const email = document.getElementById("email");
+    const password = document.getElementById("password");
+
+    const usernameError = document.getElementById("usernameError");
+    const emailError = document.getElementById("emailError");
+    const passwordError = document.getElementById("passwordError");
+
+    const usernameOk = document.getElementById("usernameOk");
+    const emailOk = document.getElementById("emailOk");
+
+    const submitBtn = document.getElementById("submitBtn");
+
+    const togglePass = document.getElementById("togglePass");
+    const toggleIcon = document.getElementById("toggleIcon");
+
+    const strengthBar = document.getElementById("strengthBar");
+
+    // simple email regex
+    const isValidEmail = (val) => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(val);
+
+    function setError(input, el, msg) {
+      el.textContent = msg;
+      el.classList.remove("hidden");
+      input.classList.add("border-red-500");
+      input.classList.remove("border-gray-800");
+    }
+
+    function clearError(input, el) {
+      el.classList.add("hidden");
+      input.classList.remove("border-red-500");
+      input.classList.add("border-gray-800");
+    }
+
+    function setOk(okEl, state) {
+      okEl.classList.toggle("hidden", !state);
+    }
+
+    function strengthScore(pw) {
+      let score = 0;
+      if (pw.length >= 6) score++;
+      if (pw.length >= 10) score++;
+      if (/[A-Z]/.test(pw)) score++;
+      if (/[0-9]/.test(pw)) score++;
+      if (/[^A-Za-z0-9]/.test(pw)) score++;
+      return Math.min(score, 5);
+    }
+
+    function updateStrength(pw) {
+      const score = strengthScore(pw); // 0..5
+      const percent = (score / 5) * 100;
+      strengthBar.style.width = percent + "%";
+
+      // change color by classes (still tailwind)
+      strengthBar.classList.remove("bg-red-500", "bg-yellow-500", "bg-emerald-500");
+      if (score <= 1) strengthBar.classList.add("bg-red-500");
+      else if (score <= 3) strengthBar.classList.add("bg-yellow-500");
+      else strengthBar.classList.add("bg-emerald-500");
+    }
+
+    function validateForm() {
+      let valid = true;
+
+      // username
+      if (username.value.trim().length < 4) {
+        setError(username, usernameError, "Username must be at least 4 characters");
+        setOk(usernameOk, false);
+        valid = false;
+      } else {
+        clearError(username, usernameError);
+        setOk(usernameOk, true);
+      }
+
+      // email
+      if (!isValidEmail(email.value.trim())) {
+        setError(email, emailError, "Enter a valid email address");
+        setOk(emailOk, false);
+        valid = false;
+      } else {
+        clearError(email, emailError);
+        setOk(emailOk, true);
+      }
+
+      // password
+      if (password.value.length < 6) {
+        setError(password, passwordError, "Password must be at least 6 characters");
+        valid = false;
+      } else {
+        clearError(password, passwordError);
+      }
+
+      updateStrength(password.value);
+
+      submitBtn.disabled = !valid;
+    }
+
+    username.addEventListener("input", validateForm);
+    email.addEventListener("input", validateForm);
+    password.addEventListener("input", validateForm);
+
+    togglePass.addEventListener("click", () => {
+      const isHidden = password.type === "password";
+      password.type = isHidden ? "text" : "password";
+      toggleIcon.className = isHidden ? "ri-eye-off-line text-xl" : "ri-eye-line text-xl";
+    });
+
+    // initial
+    validateForm();
+  </script>
+
+  <script src="https://cdn.jsdelivr.net/npm/flowbite@4.0.1/dist/flowbite.min.js"></script>
 </body>
 </html>

@@ -1,22 +1,19 @@
 
 const express = require("express")
 const multer = require("multer")
-const supabase = require("../config/supabaseClient")
+ 
 const User = require("../models/user.model")
 const { auth } = require("../middlewares/auth.middleware")
-const File = require( '../models/file.model'); // ✅ REQUIRED
-const user = require("../models/user.model")
+ 
+ 
 const { uploadFile } = require("../services/storage.service")
 
 const router = express.Router()
 const upload = multer({ storage: multer.memoryStorage() })
 
 router.get('/files', auth, async (req, res) => {
-  const user = await User.findById(req.userId).select('urls')
-  const files = await File.find();
- 
-  res.render('uploads', { files: user.urls })
-
+  const user = await User.findById(req.userId)  
+  res.render('uploads', { files: user.urls }) 
 })
 
 
@@ -29,24 +26,11 @@ router.post("/files", auth, upload.single("file"), async (req, res) => {
     }
  
      const file = req.file ;
-    // const filePath = `users/${req.userId}/${Date.now()}-${req.file.originalname}`;
-
-    // const { error } = await supabase.storage
-    //   .from("uploads")
-    //   .upload(filePath, req.file.buffer, {
-    //     contentType: req.file.mimetype
-    //   });
-
-    // if (error) throw error;
-
-    // const { data } = supabase.storage
-    //   .from("uploads")
-    //   .getPublicUrl(filePath);
-
+     
      const result = await uploadFile(file.buffer.toString('base64'))
 
 
-    const updatedUser = await user.findByIdAndUpdate(
+    const updatedUser = await User.findByIdAndUpdate(
       req.userId,
       {
         $push: {
@@ -60,9 +44,7 @@ router.post("/files", auth, upload.single("file"), async (req, res) => {
       },
       { new: true } 
     );
-
-    console.log(result) 
-
+ 
     if (!updatedUser) {
       return res.status(404).json({ message: "User not found" });
     }
@@ -75,8 +57,9 @@ router.post("/files", auth, upload.single("file"), async (req, res) => {
 });
 
 
+//data handling routes
 
-router.post("/delete-file/:id", auth, async (req, res) => {
+router.post("/delete-file/:id", auth, async (req, res) => { 
   try {
     const fileId = req.params.id
 
@@ -107,8 +90,7 @@ router.get('/images', auth, async (req, res) => {
   }
 });
 
-
-
+ 
 router.get('/videos', auth, async (req, res) => {
   const userData = await User.findById(req.userId);
 
