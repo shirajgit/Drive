@@ -13,9 +13,10 @@
 />
 
   <link rel="stylesheet" href="/sidebar.css">
+  
 </head>
-<!-- ✅ CLEAN + RESPONSIVE VERSION (Desktop sidebar + Mobile slide sidebar) -->
-<!-- Put this inside your EJS/HTML file. Works with Tailwind + Remix Icons. -->
+ 
+ 
 
 <body class="bg-gray-900 text-white overflow-x-hidden">
 
@@ -71,12 +72,8 @@
 
   <!-- ===================== DESKTOP SIDEBAR ===================== -->
   <aside class="hidden lg:block fixed top-20 left-0 h-[calc(100vh-80px)] w-64 bg-black border-r border-gray-800">
-    <div class="p-5 border-b border-gray-800 flex items-center gap-3">
-      <img src="/logo.png" class="w-10 h-10 rounded-full" />
-      <h2 class="text-lg font-semibold">Shiraj’s Drive</h2>
-    </div>
-
-    <nav class="p-4 space-y-2">
+   
+    <nav class="p-4 space-y-5">
       <a href="/files" class="sidebar-link"><i class="ri-home-4-line"></i> All Files</a>
       <a href="/images" class="sidebar-link"><i class="ri-image-line"></i> Images</a>
       <a href="/audio" class="sidebar-link"><i class="ri-music-line"></i> Music</a>
@@ -103,7 +100,7 @@
 
       <% if (!files || files.length === 0) { %>
       <!-- EMPTY STATE -->
-      <section class="min-h-[60vh] flex items-center justify-center">
+      <section class="min-h-[60vh] flex items-center ml-20 lg:ml-80 justify-center">
         <div
           class="relative max-w-md w-full p-10 rounded-3xl bg-white/5 backdrop-blur border border-white/10 shadow-[0_0_60px_rgba(16,185,129,0.15)] hover:shadow-[0_0_80px_rgba(16,185,129,0.25)] transition">
           <div class="absolute -top-10 left-1/2 -translate-x-1/2 w-32 h-32 rounded-full bg-emerald-500/25 blur-3xl"></div>
@@ -129,12 +126,14 @@
       <!-- FILE GRID -->
       <section class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-4 sm:gap-6">
         <% files.forEach(file => { %>
+        
         <article
           class="bg-gray-950/60 border border-gray-800 rounded-2xl p-3 shadow-[0_0_25px_rgba(16,185,129,0.12)] hover:shadow-[0_12px_35px_rgba(16,185,129,0.3)] hover:scale-[1.02] transition flex flex-col">
 
           <!-- Preview -->
           <% if (file.fileType && file.fileType.startsWith('image/')) { %>
-          <a href="/file/<%= file._id %>" class="block rounded-xl overflow-hidden">
+              <a href="<%= file.fileUrl %>" target="_blank" class="block rounded-xl overflow-hidden"> 
+    
             <img src="<%= file.fileUrl %>" class="h-24 sm:h-40 w-full object-cover" />
           </a>
 
@@ -145,27 +144,33 @@
           </div>
 
           <% } else if (file.fileType && file.fileType.includes('video')) { %>
+            <a href="<%= file.fileUrl %>" target="_blank" class="block rounded-xl overflow-hidden">
           <div class="h-24 sm:h-40 rounded-xl bg-purple-500/10 border border-purple-500/20 flex flex-col items-center justify-center">
             <i class="ri-folder-video-fill text-4xl sm:text-6xl text-purple-300"></i>
             <p class="text-sm mt-2 text-purple-200 font-semibold">Video</p>
-          </div>
+          </div></a>
 
           <% } else if (file.fileType && file.fileType.includes('zip')) { %>
+            <a href="<%= file.fileUrl %>" target="_blank" class="block rounded-xl overflow-hidden">
           <div class="h-24 sm:h-40 rounded-xl bg-yellow-500/10 border border-yellow-500/20 flex flex-col items-center justify-center">
             <i class="ri-folder-zip-line text-4xl sm:text-6xl text-yellow-300"></i>
             <p class="text-sm mt-2 text-yellow-200 font-semibold">ZIP</p>
-          </div>
+          </div></a>
 
           <% } else if (file.fileType && file.fileType.includes('audio')) { %>
+            
+            <a href="<%= file.fileUrl %>" target="_blank" class="block rounded-xl overflow-hidden">
           <div class="h-24 sm:h-40 rounded-xl bg-indigo-500/10 border border-indigo-500/20 flex flex-col items-center justify-center">
             <i class="ri-file-music-line text-4xl sm:text-6xl text-indigo-300"></i>
             <p class="text-sm mt-2 text-indigo-200 font-semibold">Audio</p>
           </div>
-
+                </a>
           <% } else { %>
+              <a href="<%= file.fileUrl %>" target="_blank" class="block rounded-xl overflow-hidden">
           <div class="h-24 sm:h-40 rounded-xl bg-gray-800 flex items-center justify-center">
             <i class="ri-file-line text-4xl sm:text-6xl text-gray-200"></i>
           </div>
+          </a>
           <% } %>
 
           <!-- Name -->
