@@ -138,10 +138,11 @@
           </a>
 
           <% } else if (file.fileType === 'application/pdf') { %>
+                <a href="<%= file.fileUrl %>" target="_blank" class="block rounded-xl overflow-hidden">
           <div class="h-24 sm:h-40 rounded-xl bg-red-500/10 border border-red-500/20 flex flex-col items-center justify-center">
             <i class="ri-file-pdf-2-line text-4xl sm:text-6xl text-red-300"></i>
             <p class="text-sm mt-2 text-red-200 font-semibold">PDF</p>
-          </div>
+          </div></a>
 
           <% } else if (file.fileType && file.fileType.includes('video')) { %>
             <a href="<%= file.fileUrl %>" target="_blank" class="block rounded-xl overflow-hidden">
